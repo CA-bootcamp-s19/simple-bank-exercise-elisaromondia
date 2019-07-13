@@ -26,12 +26,12 @@ contract('SimpleBank', function(accounts) {
     await instance.enroll({from: alice})
 
     const aliceEnrolled = await instance.enrolled(alice, {from: alice})
-    assert.equal(aliceEnrolled, true, 'enroll balance is incorrect, check balance method or constructor')
+    assert.equal(aliceEnrolled, true, 'enroll balance is not correct')
   });
 
   it("should not mark unenrolled users as enrolled", async() =>{
     const ownerEnrolled = await instance.enrolled(owner, {from: owner})
-    assert.equal(ownerEnrolled, false, 'only enrolled users should be marked enrolled')
+    assert.equal(ownerEnrolled, false, 'not enrolled users should not be marked enrolled')
   })
 
   it("should deposit correct amount", async () => {
@@ -39,7 +39,7 @@ contract('SimpleBank', function(accounts) {
     await instance.deposit({from: alice, value: deposit})
     const balance = await instance.getBalance({from: alice})
 
-    assert.equal(deposit.toString(), balance, 'deposit amount incorrect, check deposit method')
+    assert.equal(deposit.toString(), balance, 'deposit amount is not correct, check deposit method')
   })
 
   it("should log a deposit event when a deposit is made", async() => {
@@ -62,7 +62,7 @@ contract('SimpleBank', function(accounts) {
     await instance.withdraw(deposit, {from: alice})
     const balance = await instance.getBalance({from: alice})
 
-    assert.equal(balance.toString(), initialAmount.toString(), 'balance incorrect after withdrawal, check withdraw method')
+    assert.equal(balance.toString(), initialAmount.toString(), 'the balance is not correct after withdrawal, check withdraw method')
   })
 
   it("should not be able to withdraw more than has been deposited", async() => {
